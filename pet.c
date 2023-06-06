@@ -67,7 +67,7 @@ void  cadastro(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
       
       }while (repit == 1);
        
-        system("clear");  
+        system("cls");  
      
       
     };
