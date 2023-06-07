@@ -4,7 +4,7 @@
 #include <locale.h>
 #include <string.h>
 #include <stdlib.h>
-#include <windows.h>
+
 #define SIZE 10
 
 #define CARAC 40
@@ -38,7 +38,7 @@ void  cadastro(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
 
       printf("Qual o motivo da consulta? ");
       fgets(motivo[qtdcadastrada], CARAC ,stdin);
-      system("clear");
+      system("cls");
 
       printf("----------------------");
               
@@ -67,7 +67,7 @@ void  cadastro(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
       
       }while (repit == 1);
        
-        system("clear");  
+        system("cls");  
      
       
     };
