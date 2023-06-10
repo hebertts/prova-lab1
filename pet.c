@@ -58,12 +58,13 @@ void  cadastrar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][C
         }
       } 
    }while (repit == 1);
-      
-   system("clear");
-   printf("limite alcançado\n"); //printa na tela se o limite da memoria foi alcançada
-   printf("Pressione enter para continuar_");
-   getchar();
-   system("clear");  
+   if(qtdcadastrada >= SIZE){  
+    system("clear");
+    printf("limite alcançado\n"); //printa na tela se o limite da memoria foi alcançada
+    printf("Pressione enter para continuar_");
+    getchar();
+    system("clear");
+   }  
 };
 
 void consultar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CARAC],char dataN[SIZE][CARAC],
