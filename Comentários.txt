@@ -77,6 +77,8 @@ DEFINE:
 #define CARAC 40 // define globalmente o tamanho das carac
 
 Void cadastrar:
+- cadastrar: Essa função permite cadastrar um novo pet. Ela solicita ao usuário que insira informações como nome, raça, tutor, idade, etc. Os dados do pet são armazenados em matrizes e incrementam o contador qtdcadastrada para acompanhar o número de pets cadastrados.
+
 
     int repit; //var para sair do loop ou continuar
     
@@ -123,7 +125,9 @@ Void cadastrar:
          };
 
 Void consultar:
-
+ 
+ -consultar: Essa função permite consultar informações sobre um pet cadastrado. Ela pode ser utilizada de três maneiras diferentes: procurar por código, listar todos os pets cadastrados ou verificar se um pet específico já foi vacinado  e verificar se possui agendamento.
+ 
     int codigo1 = 0; //var para comparar o codigo da matriz com o codigo digitado pelo usuário 
     int linha = 0; //var utilizada para procurar o pet
     int repit = 0;
@@ -168,6 +172,8 @@ Void consultar:
 
 
 Void marcar:
+ - marcar: Essa função permite marcar uma consulta para um pet. Ela verifica se há disponibilidade de horário e permite selecionar um horário disponível para agendar a consulta. As informações sobre a consulta são armazenadas em matrizes, como o motivo da consulta e o horário agendado.
+ 
   int codigo1 = 0, linha = 0, hora = 0, repit = 0, escolha1 = 0,horasdis = HORASM,repithora =0;
 
   for (int i = 0; i < HORASM; i++) { //coloca os horarios na matriz
@@ -223,6 +229,8 @@ Void marcar:
       }
 
 Void vacinar:
+ -vacinar: Essa função permite marcar um pet como vacinado. Ela solicita ao usuário que informe o código do pet e, em seguida, confirma a vacinação. Se confirmada, a função atualiza o registro de vacinação para o pet correspondente.
+ 
   int codigo1 = 0;
   int linha  = 0;
   int confir = 0;
@@ -254,6 +262,8 @@ Void vacinar:
 
 
 Void editar:
+ -editar: Essa função permite editar informações de um pet cadastrado. Ela solicita ao usuário que informe o código do pet e oferece opções para editar diferentes campos, como nome do pet, nome do tutor, raça, horário da consulta, motivo da consulta, idade, etc.
+ 
         system("clear");
         printf("-------EDITAR CADASTRO-------\n");
         printf("O que você gostaria de editar?\n1.Nome do Pet\n2.Nome do Tutor\n3.Raça\n4.Mudar Horário da Consulta\n5.Cancelar Consulta\n6.Editar Motivo da Consulta\n7.Editar Idade\n8.Sair\n");
