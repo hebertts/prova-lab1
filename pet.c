@@ -27,7 +27,7 @@ void  cadastrar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][C
         fgets(nome[qtdcadastrada], CARAC, stdin);
         
       
-        printf("Raca: ");
+        printf("Raça: ");
         fgets(raca[qtdcadastrada], CARAC, stdin);
         
       
@@ -48,7 +48,7 @@ void  cadastrar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][C
         printf("\nCodigo: %.d", codigo[qtdcadastrada]);
         printf("\nNome: %s", nome[qtdcadastrada]);
         printf("Idade: %s", dataN[qtdcadastrada]);
-        printf("Raca: %s", raca[qtdcadastrada]);
+        printf("Raça: %s", raca[qtdcadastrada]);
         printf("tutor: %s", tutor[qtdcadastrada]);
         printf("----------------------\n");
         sleep(1);
@@ -107,14 +107,14 @@ void consultar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
           
             }
               printf("----------------------\n"); 
-              printf("Pressione enter para continuar");
+              printf("Pressione enter para continuar_");
               getchar();
               system("clear");   
             }
             else {
               system("clear");
               printf("Pet não encontrado\n"); //caso não seja encontrado
-              printf("Buscar novamente?\n1.Sim\n2.Nao \n");
+              printf("Buscar novamente?\n1.Sim\n2.Nao\n");
               scanf("%d",&repit);
               getchar();
               system("clear"); 
@@ -136,7 +136,7 @@ void consultar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
             }
             printf("----------------------\n");
           } 
-            printf("Pressione enter para continuar\n\n");
+            printf("Pressione enter para continuar_");
             getchar();
             system("clear");
         break;
@@ -202,11 +202,9 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
               }
           }
       
-        
-          repithora = 0;
+        repithora = 0;
         printf("Digite o número do horário escolhido: ");
-        scanf("%d", &escolha1);
-          
+        scanf(" %d", &escolha1);  
         getchar();
         
         
@@ -233,7 +231,7 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
       else if( codigo1 != codigo[linha]) {
         system("clear");
         printf("Pet não encontrado.\n\n");
-        printf("Gostaria de procurar novamente?\n1. Sim\n2. Não\n");
+        printf("Gostaria de procurar novamente?\n1.Sim\n2.Não\n");
         scanf("%d", &repit);
         getchar();
         system("clear");
@@ -318,7 +316,7 @@ void vacinar(char nome[SIZE][CARAC], int codigo[SIZE], char vacina[SIZE][CARAC])
         system("clear");
         printf("pet não encontrado\n\n");
         printf("Gostaria de procurar novamente?\n1.Sim\n2.Não\n");
-        scanf("%d",&repit);
+        scanf(" %d",&repit);
         getchar();
         system("clear");
       }
