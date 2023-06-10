@@ -13,13 +13,12 @@ int qtdcadastrada = 0; // var global para saber quantos pets foram cadastrados
 void  cadastrar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CARAC],char dataN[SIZE][CARAC],
   int codigo[SIZE],char motivo[SIZE][CARAC], char vacina[SIZE][CARAC])
   {
-    int repit;
-    
-    system("clear");
-   
+    int repit; 
     do{
+      if(qtdcadastrada < SIZE){
+        system("clear");
         repit = 0;
-         printf("-----CADASTRO-----\n");
+        printf("-----CADASTRO-----\n");
         codigo[qtdcadastrada] = qtdcadastrada + 1;
     
       
@@ -41,8 +40,6 @@ void  cadastrar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][C
  
         system("clear");
 
-   
-
         printf("\nCadastro concluído\n");     
         printf("----------------------");   
         printf("\nCodigo: %.d", codigo[qtdcadastrada]);
@@ -52,26 +49,22 @@ void  cadastrar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][C
         printf("tutor: %s", tutor[qtdcadastrada]);
         printf("----------------------\n");
         sleep(1);
-
         qtdcadastrada++;
-        
         if(qtdcadastrada < SIZE){     //verifica se tem espaço na memoria
-          printf("Digite:\n1. Nova consulta\n2. Para Sair\n ");
+          printf("Digite:\n1.Nova consulta\n2.Para Sair\n");
           scanf(" %d", &repit); 
           getchar(); //coleta o espaço
           system("clear");
         }
-      else
-      {
-        printf("limite alcançado\n"); //printa na tela se o limite da memoria foi alcançada
-        printf("Pressione enter para continuar");
-        getchar();
-      }
+      } 
+   }while (repit == 1);
       
-      }while (repit == 1);
-       
-        system("clear");  
-  };
+   system("clear");
+   printf("limite alcançado\n"); //printa na tela se o limite da memoria foi alcançada
+   printf("Pressione enter para continuar_");
+   getchar();
+   system("clear");  
+};
 
 void consultar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CARAC],char dataN[SIZE][CARAC],
   int codigo[SIZE], char motivo[SIZE][CARAC],int escolha, char vacina[SIZE][CARAC],int HoraEsco[SIZE][2])
@@ -80,31 +73,27 @@ void consultar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
     int linha = 0;
     int repit = 0;
     system("clear");
-   
+  
     if(qtdcadastrada > 0){
-   
       switch(escolha){
         case 2:
           do{
             linha = 0;
             repit = 0;
-
             printf("Digite o Código: ");   //procurar pelo codigo por ter nomes de pets iguais
             scanf(" %d",&codigo1);
             getchar();
             while( codigo1 != codigo[linha] && linha <= qtdcadastrada)  //procura pelo codigo digita na matriz
               {linha ++;}
-            if (codigo1 == codigo[linha]){   //verifica se o codigo é igual o que foi armazenado na matriz
+            if (codigo1 == codigo[linha] && codigo1 != 0){   //verifica se o codigo é igual o que foi armazenado na matriz
               printf("\nCodigo: %d", codigo[linha]);
               printf("\nNome do pet: %s", nome[linha]);
               printf("Idade: %s", dataN[linha]);
               printf("Raça: %s", raca[linha]);
               printf("Tutor: %s", tutor[linha]);
-         
               printf("Vacina: %s\n",vacina[linha]);
               if(HoraEsco[linha][1] ==1){
             printf("Consulta: agendado  às %d:00, %s",HoraEsco[linha][0],motivo[linha]);
-          
             }
               printf("----------------------\n"); 
               printf("Pressione enter para continuar_");
@@ -113,7 +102,7 @@ void consultar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
             }
             else {
               system("clear");
-              printf("Pet não encontrado\n"); //caso não seja encontrado
+              printf("Pet não encontrado\n\n"); //caso não seja encontrado
               printf("Buscar novamente?\n1.Sim\n2.Nao\n");
               scanf("%d",&repit);
               getchar();
@@ -151,20 +140,19 @@ void consultar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
       
     }
     system("clear");
-
-   } 
-
-  
+} 
 
 void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], int horario[HORASM][2],int HoraEsco[SIZE][2]) {
-  int codigo1 = 0, linha = 0, hora = 0, repit = 0, escolha1 = 0,horasdis = HORASM,repithora =0;
+  int codigo1 = 0, linha = 0, hora = 0, repit = 0, escolha1 = 0,horasdis = 0,repithora =0;
 
 
   for (int i = 0; i < HORASM; i++) {
     
       horario[i][0] = hora + 8;
       hora++;
-    
+      if(horario[i][1]==0){
+        horasdis++;
+      } 
   }
 
   if (qtdcadastrada > 0 && horasdis > 0 ) {
@@ -184,31 +172,29 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
       if (linha < qtdcadastrada && codigo1 == codigo[linha] && HoraEsco[linha][1] ==0) {
         sleep(1);
         do{
-         
           repithora =0;
           horasdis--;
-        system("clear");   
-        printf("----------------------\n");
-        printf("||    INFORMAÇÕES    ||\n");
-        printf("----------------------\n");
-        printf("     Código: %d\n", codigo[linha]);
-        printf("     Pet: %s", nome[linha]);
-        printf("----------------------\n");
-
-        printf("Horários disponíveis:\n");
-        for (int i = 0; i < HORASM; i++) {
-              if(horario[i][1] == 0 && horario[i][0] != 12){
-            printf("%d. %d:00\n", i + 1, horario[i][0]);
-              }
+          system("clear");   
+          printf("----------------------\n");
+          printf("||    INFORMAÇÕES    ||\n");
+          printf("----------------------\n");
+          printf("     Código: %d\n", codigo[linha]);
+          printf("     Pet: %s", nome[linha]);
+          printf("----------------------\n");
+          printf("Horários disponíveis:\n");
+        for (int i = 0; i < HORASM; i++) 
+        {
+          if(horario[i][1] == 0 && horario[i][0] != 12){
+          printf("%d. %d:00\n", i + 1, horario[i][0]);
           }
+         }
       
         repithora = 0;
         printf("Digite o número do horário escolhido: ");
         scanf(" %d", &escolha1);  
         getchar();
         
-        
-        if (escolha1 >= 1 && escolha1 <= HORASM && HoraEsco[linha][1] == 0) {
+        if (escolha1 >= 1 && escolha1 <= HORASM && HoraEsco[linha][1] == 0 && horario[escolha1-1][1]== 0) {
           HoraEsco[linha][1] = 1;
           horario[escolha1-1][1] = 1;
           HoraEsco[linha][0] = horario[escolha1-1][0];
@@ -222,43 +208,46 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
           printf("Pressione enter para continuar_");
           getchar();
         } else {
+          system("clear");
           printf("Horário inválido ou já ocupado.\n");
-          printf("Tentar novamente?\n1.Sim\n2.Não\n ");
+          printf("Tentar novamente?\n1.Sim\n2.Não\n");
           scanf("%d",&repithora);
         }
-        }while(repithora == 1);
+       }while(repithora == 1);
       } 
-      else if( codigo1 != codigo[linha]) {
+    
+      else if(HoraEsco[linha][1] == 1)
+      {
+        system("clear");
+        printf("Pet já possui agendamento\n\n");
+        printf("Pressione enter para continuar_");
+        getchar();
+      }
+        else{
         system("clear");
         printf("Pet não encontrado.\n\n");
         printf("Gostaria de procurar novamente?\n1.Sim\n2.Não\n");
         scanf("%d", &repit);
         getchar();
         system("clear");
-      }
+        }
+    }while (repit == 1);
+  } 
       else if (horasdis <= 0){
-        printf("Sem horários disponivéis no momento, aguarde o próximo dia\n");
-      }
-      else if(HoraEsco[linha][1] == 1)
-      {
         system("clear");
-        printf("Pet já possui agendamento");
+        printf("Sem horários disponivéis no momento, aguarde o próximo dia\n");
         printf("Pressione enter para continuar_");
         getchar();
-        
-      }
-    } while (repit == 1);
-  } else {
+        }
+    else {
     system("clear");
     printf("----------------------\n");
     printf("Nenhum pet cadastrado\n");
     printf("----------------------\n");
     sleep(2);
-  }
+    }
   system("clear");
 }
-
-
 
 void vacinar(char nome[SIZE][CARAC], int codigo[SIZE], char vacina[SIZE][CARAC]){
   int codigo1 = 0;
@@ -278,7 +267,7 @@ void vacinar(char nome[SIZE][CARAC], int codigo[SIZE], char vacina[SIZE][CARAC])
       {
         linha++;
       }
-      if (codigo1 == codigo[linha])
+      if (codigo1 == codigo[linha] && codigo1 != 0)
       {
         system("clear");
         sleep(2);
@@ -321,7 +310,6 @@ void vacinar(char nome[SIZE][CARAC], int codigo[SIZE], char vacina[SIZE][CARAC])
         system("clear");
       }
     }while (repit == 1);
-
     
   }
   else{
@@ -330,8 +318,8 @@ void vacinar(char nome[SIZE][CARAC], int codigo[SIZE], char vacina[SIZE][CARAC])
       printf("Nenhum pet cadastrado\n");
       printf("----------------------\n");
       sleep(2);
-  }
-  system("clear");
+      }
+    system("clear");
 }
 
 void editar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CARAC],char dataN[SIZE][CARAC],
@@ -339,23 +327,28 @@ int codigo[SIZE], char motivo[SIZE][CARAC],int horario[HORASM][2],int HoraEsco[S
 {
   int codigo1 =0, repit =0,linha = 0,escolha = 0;
   if(qtdcadastrada > 0){
-   system("clear");
-   printf("Digite o código: ");
-   scanf(" %d", &codigo1);
-   getchar();
-   while(linha <qtdcadastrada && codigo1 != codigo[linha]){
-      linha++;}
-   if(codigo[linha] == codigo1)
-   {
-     do{
+    do{
+        escolha = 8;
+        linha = 0;
+        repit = 0;
         system("clear");
-        printf("-----------------------------\n");
-        printf("%s",nome[linha]);
-        printf("-------EDITAR CADASTRO-------\n");
-        printf("O que você gostaria de editar?\n1.Nome do Pet\n2.Nome do Tutor\n3.Raça\n4.Mudar Horário da Consulta\n5.Cancelar Consulta\n6.Editar Motivo da Consulta\n7.Editar Idade\n8.Sair\n");
-        scanf(" %d",&escolha);
+        printf("Digite o código: ");
+        scanf(" %d", &codigo1);
         getchar();
-        switch(escolha){
+        while(linha <qtdcadastrada && codigo1 != codigo[linha]){
+        linha++;}
+  
+        if(codigo[linha] == codigo1 && codigo1 != 0)
+        {
+          do{
+              system("clear");
+              printf("-----------------------------\n");
+              printf("%s",nome[linha]);
+              printf("-------EDITAR CADASTRO-------\n");
+              printf("O que você gostaria de editar?\n1.Nome do Pet\n2.Nome do Tutor\n3.Raça\n4.Mudar Horário da Consulta\n5.Cancelar Consulta\n6.Editar Motivo da Consulta\n7.Editar Idade\n8.Sair\n");
+              scanf(" %d",&escolha);
+              getchar();
+          switch(escolha){
           case 1:
             system("clear");
             printf("--------EDIÇÃO--------\n");
@@ -403,8 +396,7 @@ int codigo[SIZE], char motivo[SIZE][CARAC],int horario[HORASM][2],int HoraEsco[S
             {
               HoraEsco[linha][1] = 0;
               marcar(nome, motivo, codigo, horario, HoraEsco);
-             
-            }
+             }
             else
             {
               system("clear");
@@ -469,16 +461,29 @@ int codigo[SIZE], char motivo[SIZE][CARAC],int horario[HORASM][2],int HoraEsco[S
             getchar();
           break;
           case 8:
+            system("clear");
             printf("Saindo...\n");
+            sleep(2);
           break;
           default:
             system("clear");
             printf("Escolha inválida.\n\n");
             printf("Aguarde alguns instantes\n");
             sleep(2);
-          }
-    }while(escolha != 8);
-  }
+          } 
+        }while (escolha != 8);
+       }
+      else 
+      {
+        printf("\n");
+        system("clear");
+        printf("pet não encontrado\n\n");
+        printf("Gostaria de procurar novamente?\n1.Sim\n2.Não\n");
+        scanf(" %d",&repit);
+        getchar();
+        system("clear");
+      }    
+    }while(repit ==1);
  } 
   else{
     system("clear");
@@ -519,6 +524,7 @@ int main() {
         case 6:
           editar(nome, tutor, raca, dataN, codigo,motivo,horario,HoraEsco);
         case 7:
+        system("clear");
           printf("Saindo...\n\n");
         break;
         default:
