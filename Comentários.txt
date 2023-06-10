@@ -1,0 +1,294 @@
+MAIN()
+{
+-----CLÍNICA VETERINARIA------
+Digite:
+
+1.Cadastrar Pet // cadastra algumas informações do pet
+
+2.Buscar Consulta // busca pelo código do pet que foi registrado pela máquina(em ordem crescente) 
+e mostra as informações
+
+3.Listar Consultas // lista todos os pets cadastrado
+ 
+4.Marcar consulta // marca a consulta e o motivo da consulta, com horários já determinados
+
+5.Vacinar Pet // busca o pet pelo código para vacinar
+
+6.Editar Cadastro // edita os registros do pet e cancela consulta ou marca novamente
+
+7.Sair // sai do programa
+
+
+}
+bibliotecas utilizadas:
+ 
+#include <stdio.h>
+ - Contém o printf, scanf, fgets, getchar
+#include <locale.h>
+ - Local/Região
+#include <unistd.h>
+ - Essa biblioteca fornece acesso a várias constantes e funções relacionadas ao sistema operacional.  Contém o sleep que foi utilizado para esperar alguns segundos antes de mostrar alguma mensagem e system para limpar o terminal
+#include <string.h>
+ - Manipular as strings, contém strcpy
+#include <stdlib.h>
+ - Funções responsáveis pela manipulação da alocação de memória
+
+Matrizes:
+
+   -char nome[SIZE][CARAC] = nome do pet  
+    -tutor[SIZE][CARAC] = nome do tutor 
+    -raca[SIZE][CARAC] = Raça do pet
+    -motivo[SIZE][CARAC] = motivo da consulta
+    -dataN[SIZE][CARAC] = idade do pet
+    -vacina[SIZE][CARAC] = Vacinar pet
+    -int codigo[SIZE] = ID do pet
+    - horario[HORASM][2] ={0} = matriz bidmensional, na coluna 0 = onde ficara os horarios, 
+    coluna 2 = um booleano, se for verdadeiro coloca 1, se falso coloca 2
+    -HoraEsco[SIZE][2] = {0} = matriz bidimensional, mesma ideia do horario, porém é o que armazena  pro pet na hora de consultar
+Ex: HoraEsco[10][0] = 9:00, horário armazenado ma matriz, linha 10 coluna 0 
+HoraEsco[10][1]  = 0, horário está disponível para ser agendado 
+
+As variáveis presentes no código fornecido são:
+
+nome: matriz de caracteres que armazena os nomes dos pets cadastrados.
+tutor: matriz de caracteres que armazena os nomes dos tutores dos pets cadastrados.
+raca: matriz de caracteres que armazena as raças dos pets cadastrados.
+dataN: matriz de caracteres que armazena as idades dos pets cadastrados.
+codigo: vetor de inteiros que armazena os códigos dos pets cadastrados.
+motivo: matriz de caracteres que armazena os motivos das consultas agendadas.
+vacina: matriz de caracteres que registra o status de vacinação dos pets.
+qtdcadastrada: variável inteira que guarda a quantidade de pets cadastrados.
+HORASM: constante que define o número de horas para consulta.
+CARAC: constante que define o tamanho das cadeias de caracteres.
+SIZE: constante que define o tamanho dos arrays de informações.
+repit: variável inteira usada para controlar loops e repetições no código.
+codigo1: variável inteira usada para armazenar o código do pet inserido pelo usuário.
+linha: variável inteira usada para percorrer as matrizes e vetores.
+hora: variável inteira usada para representar as horas disponíveis para agendamento.
+escolha1: variável inteira usada para armazenar a escolha do usuário em relação aos horários disponíveis.
+horario: matriz de inteiros que armazena os horários disponíveis para agendamento.
+horasdis: variável inteira que indica a quantidade de horas disponíveis para agendamento.
+confir: variável inteira usada para confirmar a vacinação do pet.
+escolha: variável inteira usada para armazenar a escolha do usuário em relação às opções de edição de cadastro.
+repithora: variável inteira usada para controlar loops e repetições relacionadas à escolha de horários disponíveis.
+DEFINE:
+#define SIZE 50  //define globalmente o tamanho do array 
+#define HORASM 9 // horas totais para a consulta
+#define CARAC 40 // define globalmente o tamanho das carac
+
+Void cadastrar:
+
+    int repit; //var para sair do loop ou continuar
+    
+    system("clear"); //limpar tela 
+    do{
+        repit = 0;
+         printf("-----CADASTRO-----\n");
+        codigo[qtdcadastrada] = qtdcadastrada + 1;
+        printf("Nome: ");
+        fgets(nome[qtdcadastrada], CARAC, stdin);
+        
+      
+        printf("Raca: ");
+        fgets(raca[qtdcadastrada], CARAC, stdin);
+// fgets utilizado  para pegar espaço e caracteres especiais
+// stdin é o fluxo de entrada para o fgets quando você deseja ler a entrada do usuário a partir do teclado. Ou seja, ao utilizar fgets com stdin, você estará lendo uma linha de texto digitada pelo usuário no console.
+        strcpy(vacina[qtdcadastrada],"Sem registro de Vacinação");
+ 
+        system("clear");
+
+        printf("\nCadastro concluído\n");     
+        printf("----------------------");   
+        printf("\nCodigo: %.d", codigo[qtdcadastrada]);
+        printf("\nNome: %s", nome[qtdcadastrada]);
+        printf("Idade: %s", dataN[qtdcadastrada]);
+        printf("----------------------\n");
+        sleep(1);
+
+        qtdcadastrada++;
+        
+        if(qtdcadastrada < SIZE){     //verifica se tem espaço na memoria
+          printf("Digite:\n1. Nova consulta\n2. Para Sair\n ");
+          scanf(" %d", &repit); 
+          getchar(); //coleta o espaço
+          system("clear");
+        }
+      else
+      {
+        printf("limite alcançado\n"); //printa na tela se o limite da memoria foi alcançada
+        printf("Pressione enter para continuar_");
+        getchar(); //coleta o \n
+      }
+      }while (repit == 1);
+         };
+
+Void consultar:
+
+    int codigo1 = 0; //var para comparar o codigo da matriz com o codigo digitado pelo usuário 
+    int linha = 0; //var utilizada para procurar o pet
+    int repit = 0;
+    system("clear");
+   
+    if(qtdcadastrada > 0){
+   
+      switch(escolha){ //condição para qual caso irá, dependendo o que o usuário digitar
+        case 2:
+          do{
+            linha = 0; //reiniciar a linha
+            repit = 0;
+
+            printf("Digite o Código: ");   //procurar pelo codigo por ter nomes de pets iguais
+            while( codigo1 != codigo[linha] && linha <= qtdcadastrada)  //procura pelo codigo digita na matriz
+              {linha ++;}
+            if (codigo1 == codigo[linha]){   //verifica se o codigo é igual o que foi armazenado na matriz
+              printf("Vacina: %s\n",vacina[linha]);
+              if(HoraEsco[linha][1] ==1){ //mostra apenas se teve consulta agendada 
+            printf("Consulta: agendado  às %d:00, %s",HoraEsco[linha][0],motivo[linha]);
+          
+            else {
+              system("clear");
+              printf("Pet não encontrado\n"); //caso não seja encontrado
+              printf("Buscar novamente?\n1.Sim\n2.Nao \n");
+              }
+          }while(repit == 1);    
+        break;
+        case 3:
+          printf("-----CADASTRADOS-----\n");
+          for (int i = 0; i < qtdcadastrada; i++){  //verifica se foi cadastrado algum pet
+            
+            printf("Codigo: %d\n", codigo[i]);
+            printf("Nome: %s", nome[i]);
+            printf("Idade: %s", dataN[i]);
+            if(HoraEsco[i][1] == 1){
+            printf("Consulta: agendado  às %d:00, %s",HoraEsco[i][0],motivo[i]);
+            }
+            printf("----------------------\n");
+        break;
+      }
+
+
+Void marcar:
+  int codigo1 = 0, linha = 0, hora = 0, repit = 0, escolha1 = 0,horasdis = HORASM,repithora =0;
+
+  for (int i = 0; i < HORASM; i++) { //coloca os horarios na matriz
+    
+      horario[i][0] = hora + 8;
+      hora++;
+    
+  }
+
+  if (qtdcadastrada > 0 && horasdis > 0 ) { //verifica se foi cadastrado e se tem horário disponivel
+    do {
+      system("clear");
+      printf("Digite o código do Pet: ");
+
+      while (linha < qtdcadastrada && codigo1 != codigo[linha]) {
+        linha++;
+      }
+
+      if (linha < qtdcadastrada && codigo1 == codigo[linha] && HoraEsco[linha][1] ==0) {
+        sleep(1);
+        do{
+         
+          repithora =0;
+          horasdis--; //diminui um horário disponivel
+        system("clear");   
+
+        printf("Horários disponíveis:\n");
+        for (int i = 0; i < HORASM; i++) {
+              if(horario[i][1] == 0 && horario[i][0] != 12){
+            printf("%d. %d:00\n", i + 1, horario[i][0]);
+
+        if (escolha1 >= 1 && escolha1 <= HORASM && HoraEsco[linha][1] == 0) {//verifica se o pet não tem agendamento
+          HoraEsco[linha][1] = 1;
+          horario[escolha1-1][1] = 1;
+          HoraEsco[linha][0] = horario[escolha1-1][0];
+          system("clear");
+          printf("Qual o motivo da consulta?\n");
+          fgets(motivo[linha],CARAC,stdin);
+          sleep(1);
+          system("clear");
+        } else {
+          printf("Horário inválido ou já ocupado.\n");
+      }
+      else if (horasdis <= 0){ //verifica se o horário chegou a 0
+        printf("Sem horários disponivéis no momento, aguarde o próximo dia\n");
+      }
+      else if(HoraEsco[linha][1] == 1)
+      {
+        system("clear");
+        printf("Pet já possui agendamento\n");
+        printf("Pressione enter para continuar_");
+        getchar();
+      }
+
+Void vacinar:
+  int codigo1 = 0;
+  int linha  = 0;
+  int confir = 0;
+  int repit = 0;
+  if (qtdcadastrada > 0)
+  {
+    do{
+      
+        if (confir == 1)
+        {
+          system("clear");
+          strcpy(vacina[linha], "Ok"); //coloca OK na matriz mudando o valor dado na hora de cadastrar
+          printf("Aguarde alguns instantes, estamos preparando as vacinas...\n");
+          sleep(3);
+          printf("Estamos quase finalizando...\n");
+          sleep(2);
+          system("clear");
+          printf("-----O Pet está em  dia com as vacinas-------\n");
+          printf("Pressione enter para continuar_");
+          getchar();
+        }
+        else
+        {
+          printf("ok");
+        }
+      } 
+
+
+
+
+Void editar:
+        system("clear");
+        printf("-------EDITAR CADASTRO-------\n");
+        printf("O que você gostaria de editar?\n1.Nome do Pet\n2.Nome do Tutor\n3.Raça\n4.Mudar Horário da Consulta\n5.Cancelar Consulta\n6.Editar Motivo da Consulta\n7.Editar Idade\n8.Sair\n");
+        scanf(" %d",&escolha);
+        getchar();
+        switch(escolha){ //coloca outro valor na matriz
+          case 1:
+            system("clear");
+            printf("--------EDIÇÃO--------\n");
+            printf("\nDigite o nome do Pet: ");
+            fgets(nome[linha],CARAC,stdin);
+            system("clear");
+            printf("----------------------\n");
+            printf("||    CONCLUÍDO    ||\n");
+            printf("----------------------\n");
+            printf("Nome: %s",nome[linha]);
+            printf("----------------------\n");
+            printf("Pressione enter para continuar_");
+            getchar();
+          break;
+          
+          case 4:
+            if(HoraEsco[linha][1] == 1) //verifica se o pet tem cadastro 
+            {
+              HoraEsco[linha][1] = 0; //coloca 0 para poder agendar novamente
+              marcar(nome, motivo, codigo, horario, HoraEsco);
+             
+            }
+            else
+            {
+              system("clear");
+              printf("Você não possui consulta agendada\n");
+              printf("Pressione enter para continuar_");
+              getchar();
+            }
+          break;
+
+
