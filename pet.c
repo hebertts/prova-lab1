@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #define SIZE 50  //define globalmente o tamanho do array 
-#define HORASM 1 // horas totais para a consulta
+#define HORASM 9 // horas totais para a consulta
 #define CARAC 40 // define globalmente o tamanho das carac
 int qtdcadastrada = 0; // var global para saber quantos pets foram cadastrados
 int horasdis = 0;
