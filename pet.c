@@ -5,9 +5,10 @@
 #include <string.h>
 #include <stdlib.h>
 #define SIZE 50  //define globalmente o tamanho do array 
-#define HORASM 9 // horas totais para a consulta
+#define HORASM 1 // horas totais para a consulta
 #define CARAC 40 // define globalmente o tamanho das carac
 int qtdcadastrada = 0; // var global para saber quantos pets foram cadastrados
+int horasdis = 0;
 
 
 void  cadastrar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CARAC],char dataN[SIZE][CARAC],
@@ -144,7 +145,7 @@ void consultar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CA
 } 
 
 void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], int horario[HORASM][2],int HoraEsco[SIZE][2]) {
-  int codigo1 = 0, linha = 0, hora = 0, repit = 0, escolha1 = 0,horasdis = 0,repithora =0;
+  int codigo1 = 0, linha = 0, hora = 0, repit = 0, escolha1 = 0,repithora =0;
 
 
   for (int i = 0; i < HORASM; i++) {
@@ -396,6 +397,7 @@ int codigo[SIZE], char motivo[SIZE][CARAC],int horario[HORASM][2],int HoraEsco[S
             if(HoraEsco[linha][1] == 1)
             {
               HoraEsco[linha][1] = 0;
+              horario[linha][1] = 0;
               marcar(nome, motivo, codigo, horario, HoraEsco);
              }
             else
@@ -411,6 +413,8 @@ int codigo[SIZE], char motivo[SIZE][CARAC],int horario[HORASM][2],int HoraEsco[S
             {
               system("clear");
               HoraEsco[linha][1] = 0;
+              horario[linha][1] = 0;
+              
               printf("Consulta cancelada\n");
               printf("Pressione enter para continuar_");
               getchar();
