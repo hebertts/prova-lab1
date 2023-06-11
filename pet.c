@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#define SIZE 50  //define globalmente o tamanho do array 
+#define SIZE 50 //define globalmente o tamanho do array 
 #define HORASM 9 // horas totais para a consulta
 #define CARAC 40 // define globalmente o tamanho das carac
 int qtdcadastrada = 0; // var global para saber quantos pets foram cadastrados
@@ -149,7 +149,7 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
 
 
   for (int i = 0; i < HORASM; i++) {
-    
+                  
       horario[i][0] = hora + 8;
       hora++;
       if(horario[i][1]==0){
@@ -265,11 +265,11 @@ void vacinar(char nome[SIZE][CARAC], int codigo[SIZE], char vacina[SIZE][CARAC])
       printf("Digite o código do Pet a ser Vacinado: ");
       scanf(" %d",&codigo1);
       getchar();
-      while (codigo1!=codigo[linha] && linha < SIZE)
+      while (codigo1!=codigo[linha] && linha < qtdcadastrada)
       {
         linha++;
       }
-      if (codigo1 == codigo[linha] && codigo1 != 0)
+      if (codigo1 == codigo[linha] && codigo1 != 0 && strcmp(vacina[linha],"Ok") != 0)
       {
         system("clear");
         sleep(2);
@@ -298,11 +298,20 @@ void vacinar(char nome[SIZE][CARAC], int codigo[SIZE], char vacina[SIZE][CARAC])
         }
         else
         {
-          printf("ok");
+          printf("Ok\n");
+          printf("Pressione enter para continuar_");
+          getchar();
+          
         }
       } 
-         
-      else{
+      else if(strcmp(vacina[linha],"Ok") ==0){
+        system("clear");
+        printf("-----O Pet está em  dia com as vacinas-------\n");
+        printf("Pressione enter para continuar_");
+        getchar();
+
+      }
+      else {
         printf("\n");
         system("clear");
         printf("pet não encontrado\n\n");
@@ -327,12 +336,13 @@ void vacinar(char nome[SIZE][CARAC], int codigo[SIZE], char vacina[SIZE][CARAC])
 void editar(char nome[SIZE][CARAC],char tutor[SIZE][CARAC],char raca[SIZE][CARAC],char dataN[SIZE][CARAC],
 int codigo[SIZE], char motivo[SIZE][CARAC],int horario[HORASM][2],int HoraEsco[SIZE][2])
 {
-  int codigo1 =0, repit =0,linha = 0,escolha = 0;
+  int codigo1 =0, repit =0,linha = 0,escolha = 0,linha1 = 0;
   if(qtdcadastrada > 0){
     do{
         escolha = 8;
         linha = 0;
         repit = 0;
+        linha1 =0;
         system("clear");
         printf("Digite o código: ");
         scanf(" %d", &codigo1);
@@ -396,8 +406,12 @@ int codigo[SIZE], char motivo[SIZE][CARAC],int horario[HORASM][2],int HoraEsco[S
           case 4:
             if(HoraEsco[linha][1] == 1)
             {
+              for (int i = 0; HoraEsco[linha][0] != horario[linha1][0]  ; i++)
+              {  
+                linha1++;
+              }
               HoraEsco[linha][1] = 0;
-              horario[linha][1] = 0;
+              horario[linha1][1] = 0;
               marcar(nome, motivo, codigo, horario, HoraEsco);
              }
             else
@@ -413,11 +427,17 @@ int codigo[SIZE], char motivo[SIZE][CARAC],int horario[HORASM][2],int HoraEsco[S
             {
               system("clear");
               HoraEsco[linha][1] = 0;
-              horario[linha][1] = 0;
+              for (int i = 0; HoraEsco[linha][0] != horario[linha1][0]  ; i++)
+              {  
+                linha1++;
+              }
               
+              horario[linha1][1] = 0;
               printf("Consulta cancelada\n");
               printf("Pressione enter para continuar_");
               getchar();
+          
+              
             }
             else
             {
