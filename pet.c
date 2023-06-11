@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #define SIZE 50 //define globalmente o tamanho do array 
-#define HORASM 9 // horas totais para a consulta
+#define HORASM 9// horas totais para a consulta
 #define CARAC 40 // define globalmente o tamanho das carac
 int qtdcadastrada = 0; // var global para saber quantos pets foram cadastrados
 int horasdis = 0;
@@ -148,17 +148,18 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
   int codigo1 = 0, linha = 0, hora = 0, repit = 0, escolha1 = 0,repithora =0;
 
 
-  for (int i = 0; i < HORASM; i++) {
-                  
+  for (int i = 0; i < HORASM && horario[i][1] != 1; i++) {
+                 
       horario[i][0] = hora + 8;
       hora++;
-      if(horario[i][1]==0){
-        horasdis++;
-      } 
+     horario[i][0] ==12 ? horario[i][0] += 1 : i;
+      horasdis++;
+      
   }
 
-  if (qtdcadastrada > 0 && horasdis > 0 ) {
+  
     do {
+     if (qtdcadastrada > 0 && horasdis > 0 ) {
       linha = 0; 
       repit = 0;
       system("clear");
@@ -174,8 +175,9 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
       if (linha < qtdcadastrada && codigo1 == codigo[linha] && HoraEsco[linha][1] ==0) {
         sleep(1);
         do{
+          
           repithora =0;
-          horasdis--;
+          
           system("clear");   
           printf("----------------------\n");
           printf("||    INFORMAÇÕES    ||\n");
@@ -186,7 +188,7 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
           printf("Horários disponíveis:\n");
         for (int i = 0; i < HORASM; i++) 
         {
-          if(horario[i][1] == 0 && horario[i][0] != 12){
+          if(horario[i][1] == 0){
           printf("%d. %d:00\n", i + 1, horario[i][0]);
           }
          }
@@ -214,7 +216,8 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
           printf("Horário inválido ou já ocupado.\n");
           printf("Tentar novamente?\n1.Sim\n2.Não\n");
           scanf("%d",&repithora);
-        }
+          }
+           
        }while(repithora == 1);
       } 
     
@@ -233,21 +236,23 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
         getchar();
         system("clear");
         }
-    }while (repit == 1);
   } 
-      else if (horasdis <= 0){
+        }while (repit == 1);
+      if (horasdis <= 0){
         system("clear");
         printf("Sem horários disponivéis no momento, aguarde o próximo dia\n");
         printf("Pressione enter para continuar_");
         getchar();
         }
-    else {
+        
+    else if (codigo1 != codigo[linha]){
     system("clear");
     printf("----------------------\n");
     printf("Nenhum pet cadastrado\n");
     printf("----------------------\n");
     sleep(2);
     }
+  horasdis--;
   system("clear");
 }
 
