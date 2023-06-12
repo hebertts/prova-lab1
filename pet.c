@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #define SIZE 50 //define globalmente o tamanho do array 
-#define HORASM 9// horas totais para a consulta
+#define HORASM 4// horas totais para a consulta
 #define CARAC 40 // define globalmente o tamanho das carac
 int qtdcadastrada = 0; // var global para saber quantos pets foram cadastrados
 int horasdis = 0;
@@ -201,6 +201,7 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
         if (escolha1 >= 1 && escolha1 <= HORASM && HoraEsco[linha][1] == 0 && horario[escolha1-1][1]== 0) {
           HoraEsco[linha][1] = 1;
           horario[escolha1-1][1] = 1;
+          horasdis--;
           HoraEsco[linha][0] = horario[escolha1-1][0];
           system("clear");
           printf("Qual o motivo da consulta?\n");
@@ -245,14 +246,14 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
         getchar();
         }
         
-    else if (codigo1 != codigo[linha]){
+    else if (qtdcadastrada <= 0){
     system("clear");
     printf("----------------------\n");
     printf("Nenhum pet cadastrado\n");
     printf("----------------------\n");
     sleep(2);
     }
-  horasdis--;
+  
   system("clear");
 }
 
