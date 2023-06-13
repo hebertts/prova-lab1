@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #define SIZE 50 //define globalmente o tamanho do array 
-#define HORASM 4// horas totais para a consulta
+#define HORASM 8// horas totais para a consulta
 #define CARAC 40 // define globalmente o tamanho das carac
 int qtdcadastrada = 0; // var global para saber quantos pets foram cadastrados
 int horasdis = 0;
@@ -151,8 +151,13 @@ void marcar(char nome[SIZE][CARAC], char motivo[SIZE][CARAC], int codigo[SIZE], 
   for (int i = 0; i < HORASM && horario[i][1] != 1; i++) {
                  
       horario[i][0] = hora + 8;
+        if(horario[i][0] == 12){
       hora++;
-     horario[i][0] ==12 ? horario[i][0] += 1 : i;
+      horario[i][0] = hora+8;
+    }
+      hora++;
+
+
       horasdis++;
       
   }
